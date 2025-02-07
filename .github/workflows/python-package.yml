@@ -27,7 +27,7 @@ jobs:
     - name: Install wheel and run tests
       run: |
         pip install dist/*.whl
-        python tests/test_packagename.py
+        python tests/test_eventhouse.py
       working-directory: 'DataIngestionFramework/'
 
     - name: Upload artifact
