@@ -12,7 +12,7 @@ import fabricdataingest.utils as utils
 
 
 class TestPackagename(unittest.TestCase):
-    def test_print_hello(self,name="Angelica"):
+    def test_print_hello(self,name="Microsoft"):
         # Call the function
         say_hello = hw.print_hello(name)
         # Assert the output
