@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventhouse",
+    "displayName": "IngestionLogs",
+    "description": "IngestionLogs"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "677baa79-9209-811e-456b-c8725bf0e391"
+  }
+}
