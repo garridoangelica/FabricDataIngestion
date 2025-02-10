@@ -23,7 +23,7 @@
 
 # Welcome to your new notebook
 # Type here in the cell editor to add code!
-print('Hello World')
+print('Hello Angelica')
 
 # METADATA ********************
 
@@ -35,7 +35,7 @@ print('Hello World')
 # CELL ********************
 
 ## Create a new file in module1 in built-in directory
-# mssparkutils.fs.put("file:///synfs/nb_resource/builtin/pythonTemplate/src/packagename/module1/_helloworld.py", "", True)
+# mssparkutils.fs.put("file:///synfs/nb_resource/builtin/pythonTemplate/src/samplepackage/module1/_helloworld.py", "", True)
 
 
 # METADATA ********************
@@ -48,7 +48,7 @@ print('Hello World')
 # CELL ********************
 
 ## import the package
-import builtin.pythonTemplate.src.packagename.module1 as m1
+import builtin.pythonTemplate.src.samplepackage.module1 as m1
 
 
 # METADATA ********************
@@ -75,18 +75,8 @@ m1.print_hello('Angelica')
 
 # CELL ********************
 
-import samplepackage.module1 as m1
-m1.print_hello("Angelica")
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
+from samplepackage import print_hello
+print_hello('Angelica')
 
 # METADATA ********************
 
