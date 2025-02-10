@@ -24,14 +24,39 @@ jobs:
       run: python -m build
       working-directory: 'DataIngestionFramework/'
 
-    - name: Install wheel and run tests
-      run: |
-        pip install dist/*.whl
-        python tests/test_eventhouse.py
-      working-directory: 'DataIngestionFramework/'
-
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: artifact
         path: DataIngestionFramework/dist
+  
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: artifact
+        path: DataIngestionFramework/dist
+    
+    - name: Azure Login action
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.FABRICSPN }}
+        enable-AzPSSession: true
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    
+    - name: Install wheel and run tests
+      run: |
+        pip install DataIngestionFramework/dist/*.whl
+        python tests/test_eventhouse.py
+      working-directory: 'DataIngestionFramework/'
