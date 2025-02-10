@@ -1,0 +1,17 @@
+// filepath: /c:/Users/agarrido/GitRepos/FabricDataEng/DataIngestionFramework/.vscode/launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python: Test EventHouse",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/DataIngestionFramework/tests/test_eventhouse.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/DataIngestionFramework/src"
+            }            
+        }
+    ]
+}

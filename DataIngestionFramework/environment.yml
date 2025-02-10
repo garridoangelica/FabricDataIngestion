@@ -1,0 +1,10 @@
+name: fabricdataingest
+channels: 
+  - defaults
+  - conda-forge
+dependencies: 
+  - python=3.10
+  - pip
+  - pyspark==3.5.4
+  - azure-kusto-data
+  

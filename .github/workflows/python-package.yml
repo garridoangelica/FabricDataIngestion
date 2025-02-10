@@ -1,0 +1,37 @@
+name: Python Package
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade build
+
+    - name: Generate wheel in dist directory
+      run: python -m build
+      working-directory: 'DataIngestionFramework/'
+
+    - name: Install wheel and run tests
+      run: |
+        pip install dist/*.whl
+        python tests/test_eventhouse.py
+      working-directory: 'DataIngestionFramework/'
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: artifact
+        path: DataIngestionFramework/dist

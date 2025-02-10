@@ -1,0 +1,15 @@
+{
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./DataIngestionFramework",
+        "-p",
+        "test*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true,
+    "python.analysis.extraPaths": [
+        "./DataIngestionFramework/src"
+    ],
+    "python.defaultInterpreterPath": "C:/Users/agarrido/AppData/Local/anaconda3/envs/fabricdataingest/python.exe"
+}
