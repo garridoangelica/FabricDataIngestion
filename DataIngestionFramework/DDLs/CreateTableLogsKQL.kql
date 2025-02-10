@@ -1,0 +1,8 @@
+.create table SourceToBronzeLogs (
+    SourceTableID: string,
+    DestLakehouse: string,
+    DestTableName: string,
+    Status: string,
+    LogTime: datetime
+)
+
