@@ -61,13 +61,14 @@ jobs:
       run: |
         echo "KUSTO_URI=${{ vars.FABRIC_KUSTO_URI }}" >> $GITHUB_ENV
         echo "KUSTO_DATABASE=${{ vars.FABRIC_KUSTO_DATABASE }}" >> $GITHUB_ENV
-        echo "KUSTO_DATABASE=${{ secrets.FABRICSPN_CLIENTID }}" >> $GITHUB_ENV
-        echo "KUSTO_DATABASE=${{ secrets.FABRICSPN_SECRET }}" >> $GITHUB_ENV
-        echo "KUSTO_DATABASE=${{ secrets.FABRICSPN_TENANTID }}" >> $GITHUB_ENV
+        echo "FABRICSPN_CLIENTID=${{ secrets.FABRICSPN_CLIENTID }}" >> $GITHUB_ENV
+        echo "FABRICSPN_SECRET=${{ secrets.FABRICSPN_SECRET }}" >> $GITHUB_ENV
+        echo "FABRICSPN_TENANTID=${{ secrets.FABRICSPN_TENANTID }}" >> $GITHUB_ENV
 
     - name: Install wheel
       run: |
         pip install dist/*.whl
+      working-directory: 'DataIngestionFramework/'
 
     - name: Run Eventhouse Test Case
       run: |
