@@ -5,4 +5,4 @@
     Status: string,
     LogTime: datetime
 )
-
+.add database IngestionLogs admins ('aadapp=<applicatino id of SPN>')
