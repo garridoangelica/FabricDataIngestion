@@ -44,6 +44,9 @@ jobs:
         name: artifact
         path: DataIngestionFramework/dist
     
+    - name: Unzip artifact
+      run: unzip DataIngestionFramework/dist/artifact.zip -d DataIngestionFramework/dist
+    
     - name: Azure Login action
       uses: azure/login@v2
       with:
