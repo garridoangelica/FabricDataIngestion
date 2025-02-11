@@ -44,12 +44,6 @@ jobs:
         name: artifact
         path: DataIngestionFramework/dist
     
-    - name: List files in current directory
-      run: ls -la DataIngestionFramework/dist
-
-    - name: Unzip artifact
-      run: unzip DataIngestionFramework/dist/artifact.zip -d DataIngestionFramework/dist
-    
     - name: Azure Login action
       uses: azure/login@v2
       with:
@@ -63,6 +57,6 @@ jobs:
     
     - name: Install wheel and run tests
       run: |
-        pip install DataIngestionFramework/dist/*.whl
+        pip install dist/*.whl
         python tests/test_eventhouse.py
       working-directory: 'DataIngestionFramework/'
