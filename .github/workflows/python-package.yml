@@ -38,14 +38,25 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     
+    - name: Print current directory
+      run: pwd
+
+    - name: List files in current directory
+      run: ls -la
+
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: artifact
         path: DataIngestionFramework/dist
     
+    - name: Print current directory
+      run: pwd
+
+    - name: List files in current directory
+      run: ls -la
     - name: Unzip artifact
-      run: unzip DataIngestionFramework/dist/artifact.zip -d DataIngestionFramework/dist
+      run: unzip artifact.zip -d DataIngestionFramework/dist
     
     - name: Azure Login action
       uses: azure/login@v2
