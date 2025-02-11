@@ -10,7 +10,14 @@
             "program": "${workspaceFolder}/DataIngestionFramework/tests/test_eventhouse.py",
             "console": "integratedTerminal",
             "env": {
-                "PYTHONPATH": "${workspaceFolder}/DataIngestionFramework/src"
+                "PYTHONPATH": "${workspaceFolder}/DataIngestionFramework/src",
+                "FABRIC_KUSTO_URI": "https://trd-zpme6x7nuat3z97ven.z6.kusto.fabric.microsoft.com",
+                "FABRIC_KUSTO_DATABASE": "IngestionLogs",
+                "LOCAL_ENV": "true", // set to false if testing with SPN below
+                // "GITHUB_ACTIONS_ENV": "true", // set to true if testing locally with SPN, simulate github actions
+                // "FABRICSPN_CLIENTID":"", // replace if testing locally with SPN
+                // "FABRICSPN_SECRET":"", // replace if testing locally with SPN
+                // "FABRICSPN_TENANTID":"", // replace if testing locally with SPN
             }            
         }
     ]

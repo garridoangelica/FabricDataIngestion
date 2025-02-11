@@ -3,7 +3,8 @@ name: Python Package
 on: [push, pull_request]
 
 jobs:
-  build:
+  build_wheel:
+    name: Build Wheel
     runs-on: ubuntu-latest
 
     steps:
@@ -24,14 +25,52 @@ jobs:
       run: python -m build
       working-directory: 'DataIngestionFramework/'
 
-    - name: Install wheel and run tests
-      run: |
-        pip install dist/*.whl
-        python tests/test_eventhouse.py
-      working-directory: 'DataIngestionFramework/'
-
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: artifact
         path: DataIngestionFramework/dist
+  
+  test:
+    name: Run Test Cases
+    runs-on: ubuntu-latest
+    needs: build_wheel
+    
+    env:
+      FABRIC_KUSTO_URI: ${{ vars.FABRIC_KUSTO_URI }}
+      FABRIC_KUSTO_DATABASE: ${{ vars.FABRIC_KUSTO_DATABASE }}
+      FABRICSPN_CLIENTID: ${{ secrets.FABRICSPN_CLIENTID }}
+      FABRICSPN_SECRET: ${{ secrets.FABRICSPN_SECRET }}
+      FABRICSPN_TENANTID: ${{ secrets.FABRICSPN_TENANTID }}
+      GITHUB_ACTIONS_ENV: "true"
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: artifact
+        path: DataIngestionFramework/dist
+    
+    - name: Azure Login action
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.FABRICSPN }}
+        enable-AzPSSession: true
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    
+    - name: Install wheel
+      run: |
+        pip install dist/*.whl
+      working-directory: 'DataIngestionFramework/'
+
+    - name: Run Eventhouse Test Case
+      run: |
+        python tests/test_eventhouse.py
+      working-directory: 'DataIngestionFramework/'

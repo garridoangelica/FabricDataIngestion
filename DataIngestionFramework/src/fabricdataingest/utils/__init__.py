@@ -8,15 +8,15 @@ def utc_time():
     """
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
-def buildAppendCommand(id, tablename,status):
+def buildAppendCommand(id, lakehouse,tablename,status):
     """
     Return KQL command 
     """
     kql_command = f"""
-    .append LoggingMetadata <|
-    datatable (ID: string, TableName: string, Status: string, LogTime: datetime)
+    .append SourceToBronzeLogs <|
+    datatable (SourceTableID: string, DestLakehouse: string, DestTableName: string, Status: string, LogTime: datetime)
     [
-        "{id}", "{tablename}", "{status}", datetime({utc_time()})
+        "{id}","{lakehouse}", "{tablename}", "{status}", datetime({utc_time()})
     ]
     """
     return kql_command
@@ -24,6 +24,17 @@ def buildAppendCommand(id, tablename,status):
 def isFabricSparkEnv():
     # Check for an environment variable that is specific to Fabric Spark
     return 'FABRIC_SPARK_ENV' in os.environ
+
+def isLocalEnv():
+    # Check for an environment variable that is specific to local development
+    if 'LOCAL_ENV' in os.environ and 'GITHUB_ACTIONS_ENV' in os.environ:
+        if os.environ['LOCAL_ENV'] == 'false' and os.environ['GITHUB_ACTIONS_ENV'] == 'true':
+            return False
+    return 'LOCAL_ENV' in os.environ
+
+def isGithubWorkflowEnv():
+    # Check for an environment variable that is specific to GitHub Actions
+    return 'GITHUB_ACTIONS_ENV' in os.environ
 
 __all__ = [
     "utc_time",

@@ -7,4 +7,5 @@ dependencies:
   - pip
   - pyspark==3.5.4
   - azure-kusto-data
+  - delta-spark
   

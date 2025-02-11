@@ -3,6 +3,7 @@ from azure.kusto.data.exceptions import KustoServiceError
 import logging
 from datetime import datetime
 import fabricdataingest.utils as utils
+import os 
 
 class EventHouseConnector:
     """
@@ -21,12 +22,19 @@ class EventHouseConnector:
         if utils.isFabricSparkEnv(): 
             def token_provider():
                 return mssparkutils.credentials.getToken(self.kustoUri)
-
             kcsb = KustoConnectionStringBuilder.with_token_provider(self.kustoUri, token_provider)
-        else:
+        
+        elif utils.isLocalEnv(): 
             ### Asssuming it's local dev. Authenticate with AAD
             kcsb = KustoConnectionStringBuilder.with_aad_device_authentication(self.kustoUri)
 
+        elif utils.isGithubWorkflowEnv(): 
+            client_id = os.getenv('FABRICSPN_CLIENTID')
+            client_secret = os.getenv('FABRICSPN_SECRET')
+            tenant_id =  os.getenv('FABRICSPN_TENANTID')
+            kcsb = KustoConnectionStringBuilder.with_aad_application_key_authentication(self.kustoUri,client_id, client_secret, tenant_id)
+        else:
+            raise ValueError(f"Environment not supported. Please use local, Fabric, or GitHub Workflow.")
         return KustoClient(kcsb)
 
     def execute_query(self, kql_command):
