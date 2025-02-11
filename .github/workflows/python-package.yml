@@ -39,9 +39,9 @@ jobs:
     env:
       KUSTO_URI: ${{ vars.FABRIC_KUSTO_URI }}
       KUSTO_DATABASE: ${{ vars.FABRIC_KUSTO_DATABASE }}
-      AZURE_CLIENT_ID: ${{ secrets.FABRICSPN_CLIENTID }}
-      AZURE_CLIENT_SECRET: ${{ secrets.FABRICSPN_SECRET }}
-      AZURE_TENANT_ID: ${{ secrets.FABRICSPN_TENANTID }}
+      FABRICSPN_CLIENTID: ${{ secrets.FABRICSPN_CLIENTID }}
+      FABRICSPN_SECRET: ${{ secrets.FABRICSPN_SECRET }}
+      FABRICSPN_TENANTID: ${{ secrets.FABRICSPN_TENANTID }}
       GITHUB_ACTIONS_ENV: "true"
 
     steps:
