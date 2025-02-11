@@ -27,6 +27,9 @@ def isFabricSparkEnv():
 
 def isLocalEnv():
     # Check for an environment variable that is specific to local development
+    if 'LOCAL_ENV' in os.environ and 'GITHUB_ACTIONS_ENV' in os.environ:
+        if os.environ['LOCAL_ENV'] == 'false' and os.environ['GITHUB_ACTIONS_ENV'] == 'true':
+            return False
     return 'LOCAL_ENV' in os.environ
 
 def isGithubWorkflowEnv():

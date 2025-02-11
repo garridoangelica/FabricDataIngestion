@@ -27,10 +27,10 @@ class TestPackagename(unittest.TestCase):
         self.assertEqual(ehc.kustoUri, kustoUri)
         self.assertEqual(ehc.database, database)
 
-        id = "1"
+        id = "2"
         status = "InProgress"
         # Get the KQL Command
-        kql_command = utils.buildAppendCommand(f'{id}',"bronze", f"Table{id}_TestCase",f"{status}")
+        kql_command = utils.buildAppendCommand(f'{id}',"bronze", f"Table{id}_TestCaseGitHub",f"{status}")
         response = ehc.execute_query(kql_command)
         self.assertEqual(response.errors_count, 0)
 
