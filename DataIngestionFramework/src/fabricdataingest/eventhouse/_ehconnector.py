@@ -31,7 +31,7 @@ class EventHouseConnector:
         elif utils.isGithubWorkflowEnv(): 
             client_id = os.getenv('FABRICSPN_CLIENTID')
             client_secret = os.getenv('FABRICSPN_SECRET')
-            tenant_id =  os.getenv('FABRICSPN_SUBID')
+            tenant_id =  os.getenv('FABRICSPN_TENANTID')
             kcsb = KustoConnectionStringBuilder.with_aad_application_key_authentication(self.kustoUri,client_id, client_secret, tenant_id)
         else:
             raise ValueError(f"Environment not supported. Please use local, Fabric, or GitHub Workflow.")
