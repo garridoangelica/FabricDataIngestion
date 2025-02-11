@@ -25,6 +25,14 @@ def isFabricSparkEnv():
     # Check for an environment variable that is specific to Fabric Spark
     return 'FABRIC_SPARK_ENV' in os.environ
 
+def isLocalEnv():
+    # Check for an environment variable that is specific to local development
+    return 'LOCAL_ENV' in os.environ
+
+def isGithubWorkflowEnv():
+    # Check for an environment variable that is specific to GitHub Actions
+    return 'GITHUB_ACTIONS_ENV' in os.environ
+
 __all__ = [
     "utc_time",
     "buildAppendCommand",

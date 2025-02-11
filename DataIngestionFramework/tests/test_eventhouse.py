@@ -39,7 +39,7 @@ if __name__ == '__main__':
     suite = unittest.TestSuite()
     # Add individual test cases to the suite
     suite.addTest(TestPackagename('test_print_hello'))
-    # suite.addTest(TestPackagename('test_eventhouse_connector'))
+    suite.addTest(TestPackagename('test_eventhouse_connector'))
     # Run the test suite
     runner = unittest.TextTestRunner()
     runner.run(suite)

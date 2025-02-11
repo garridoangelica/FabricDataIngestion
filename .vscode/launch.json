@@ -10,7 +10,10 @@
             "program": "${workspaceFolder}/DataIngestionFramework/tests/test_eventhouse.py",
             "console": "integratedTerminal",
             "env": {
-                "PYTHONPATH": "${workspaceFolder}/DataIngestionFramework/src"
+                "PYTHONPATH": "${workspaceFolder}/DataIngestionFramework/src",
+                "FABRIC_KUSTO_URI": "https://trd-zpme6x7nuat3z97ven.z6.kusto.fabric.microsoft.com",
+                "FABRIC_KUSTO_DATABASE": "IngestionLogs",
+                "LOCAL_ENV": "true"
             }            
         }
     ]
