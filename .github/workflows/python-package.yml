@@ -3,7 +3,8 @@ name: Python Package
 on: [push, pull_request]
 
 jobs:
-  build:
+  build_wheel:
+    name: Build Wheel
     runs-on: ubuntu-latest
 
     steps:
@@ -31,8 +32,9 @@ jobs:
         path: DataIngestionFramework/dist
   
   test:
+    name: Run Test Cases
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_wheel
     
     steps:
     - name: Checkout repository
@@ -55,8 +57,19 @@ jobs:
       with:
         python-version: '3.10'
     
-    - name: Install wheel and run tests
+    - name: Set environment variables
+      run: |
+        echo "KUSTO_URI=${{ vars.FABRIC_KUSTO_URI }}" >> $GITHUB_ENV
+        echo "KUSTO_DATABASE=${{ vars.FABRIC_KUSTO_DATABASE }}" >> $GITHUB_ENV
+        echo "KUSTO_DATABASE=${{ secrets.FABRICSPN_CLIENTID }}" >> $GITHUB_ENV
+        echo "KUSTO_DATABASE=${{ secrets.FABRICSPN_SECRET }}" >> $GITHUB_ENV
+        echo "KUSTO_DATABASE=${{ secrets.FABRICSPN_TENANTID }}" >> $GITHUB_ENV
+
+    - name: Install wheel
       run: |
         pip install dist/*.whl
+
+    - name: Run Eventhouse Test Case
+      run: |
         python tests/test_eventhouse.py
       working-directory: 'DataIngestionFramework/'

@@ -8,15 +8,15 @@ def utc_time():
     """
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
-def buildAppendCommand(id, tablename,status):
+def buildAppendCommand(id, lakehouse,tablename,status):
     """
     Return KQL command 
     """
     kql_command = f"""
-    .append LoggingMetadata <|
-    datatable (ID: string, TableName: string, Status: string, LogTime: datetime)
+    .append SourceToBronzeLogs <|
+    datatable (SourceTableID: string, DestLakehouse: string, DestTableName: string, Status: string, LogTime: datetime)
     [
-        "{id}", "{tablename}", "{status}", datetime({utc_time()})
+        "{id}","{lakehouse}", "{tablename}", "{status}", datetime({utc_time()})
     ]
     """
     return kql_command

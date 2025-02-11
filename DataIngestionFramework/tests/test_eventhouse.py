@@ -19,8 +19,8 @@ class TestPackagename(unittest.TestCase):
         self.assertEqual(say_hello, f"Hello {name}")
 
     def test_eventhouse_connector(self):
-        kustoUri = "https://trd-jkycvhh5dttmmmh47b.z7.kusto.fabric.microsoft.com"
-        database = "EventHouseDB"
+        kustoUri = os.getenv('FABRIC_KUSTO_URI')
+        database = os.getenv('FABRIC_KUSTO_DATABASE')
         # Call the function
         ehc = evc.EventHouseConnector(kustoUri, database)
         # Assert the output
@@ -30,7 +30,7 @@ class TestPackagename(unittest.TestCase):
         id = "1"
         status = "InProgress"
         # Get the KQL Command
-        kql_command = utils.buildAppendCommand(f'{id}', f"Table{id}_TestCase",f"{status}")
+        kql_command = utils.buildAppendCommand(f'{id}',"bronze", f"Table{id}_TestCase",f"{status}")
         response = ehc.execute_query(kql_command)
         self.assertEqual(response.errors_count, 0)
 
