@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 
-# Add the src/fabricdataingestion directory to the sys.path If I'm doing local dev
+# Add the src/fabricdataingestion directory to the sys.path If I'm doing local dev with no launch.json
 # src_path = 'C:\\Users\\agarrido\\GitRepos\\FabricDataEng\\DataIngestionFramework\\src'
 # sys.path.insert(0, src_path)
 
