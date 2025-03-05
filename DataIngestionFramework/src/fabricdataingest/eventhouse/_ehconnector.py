@@ -1,9 +1,10 @@
 from azure.kusto.data import KustoClient, KustoConnectionStringBuilder
-from azure.kusto.data.exceptions import KustoServiceError
+from azure.kusto.data.exceptions import KustoServiceError, KustoThrottlingError
 import logging
 from datetime import datetime
 import fabricdataingest.utils as utils
-import os 
+import os
+from tenacity import retry, stop_after_attempt, wait_random_exponential, retry_if_exception_type, before_sleep_log, after_log
 
 class EventHouseConnector:
     """
@@ -37,13 +38,31 @@ class EventHouseConnector:
             raise ValueError(f"Environment not supported. Please use local, Fabric, or GitHub Workflow.")
         return KustoClient(kcsb)
 
+    @retry(
+        retry=retry_if_exception_type(KustoThrottlingError),
+        wait=wait_random_exponential(multiplier=5,min=10, max=60),
+        stop=stop_after_attempt(5),
+        reraise=True
+    )
+    def execute_query_with_retry(self, kql_command):
+        try:
+            self.logger.info(f'Executing KQL command: {kql_command}')
+            response = self.client.execute(self.database, kql_command)
+            self.logger.info("Query executed successfully!")
+            return response
+        except KustoThrottlingError as e:
+            self.logger.warning(f"KustoThrottlingError encountered: {kql_command[159:171]}")
+            raise e
+        except KustoServiceError as e:
+            self.logger.error(f"KustoServiceError: {e}")
+            raise e
+        except Exception as e:
+            self.logger.error(f"Unexpected error: {e}")
+            raise e
+
     def execute_query(self, kql_command):
         try:
-            self.logger.info(f'Logging to EvenHouse {kql_command}')
-            response = self.client.execute(self.database, kql_command)
-            if response.errors_count == 0:
-                self.logger.info("Query executed successfully!")
-            return response
-
-        except KustoServiceError as e:
-            self.logger.error(f"KustoClientError: {e}")
+            return self.execute_query_with_retry(kql_command)
+        except KustoThrottlingError as e:
+            self.logger.error(f"Failed to execute query after retries due to throttling: {kql_command[159:171]}")
+            raise e

@@ -7,7 +7,7 @@ def read_requirements():
         return req_file.read().splitlines()
     
 # REQUIREMENTS = read_requirements()
-REQUIREMENTS = ['azure-kusto-data==4.6.3', 'azure-eventhub']
+REQUIREMENTS = ['azure-kusto-data==4.6.3', 'azure-eventhub','tenacity']
 setup(
     name='fabricdataingest',
     version='0.1.0',
