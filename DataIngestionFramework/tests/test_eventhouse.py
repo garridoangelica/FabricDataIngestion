@@ -4,10 +4,6 @@ import os
 from azure.kusto.data.exceptions import KustoServiceError,KustoThrottlingError
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# Add the src/fabricdataingestion directory to the sys.path If I'm doing local dev with no launch.json
-# src_path = 'C:\\Users\\agarrido\\GitRepos\\FabricDataEng\\DataIngestionFramework\\src'
-# sys.path.insert(0, src_path)
-
 import fabricdataingest.helloworld as hw
 import fabricdataingest.eventhouse as evc
 import fabricdataingest.utils as utils

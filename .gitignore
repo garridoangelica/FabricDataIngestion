@@ -1,0 +1,4 @@
+**/__pycache__/
+DataIngestionFramework/tests/__pycache__/
+.env
+.vscode/

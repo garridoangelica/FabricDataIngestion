@@ -1,6 +1,7 @@
 name: Python Package
 
-on: [push, pull_request]
+on: 
+  workflow_dispatch  # Trigger workflow manually
 
 jobs:
   build_wheel:

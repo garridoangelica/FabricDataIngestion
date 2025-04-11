@@ -17,10 +17,10 @@ setup(
     # Additional metadata
     author='Angelica Garrido',
     author_email='agarrido@microsoft.com',
-    description='Template for creating packages',
+    description='Setup for Data Ingestion Framework',
+    license='MIT',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/garridoangelica/FabricDataEng',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',

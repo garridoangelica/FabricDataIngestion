@@ -9,3 +9,4 @@ dependencies:
   - azure-kusto-data
   - delta-spark
   - tenacity
+  - azure-eventhub
