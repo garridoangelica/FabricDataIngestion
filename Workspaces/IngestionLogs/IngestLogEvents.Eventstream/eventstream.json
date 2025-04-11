@@ -1,0 +1,51 @@
+{
+  "sources": [
+    {
+      "id": "e90dc6da-e302-4d58-bdd0-368a87cd693f",
+      "name": "IngestFromNotebooks",
+      "type": "CustomEndpoint",
+      "properties": {}
+    }
+  ],
+  "destinations": [
+    {
+      "id": "d264e6b0-c698-4ec2-aa15-7fc5186ec685",
+      "name": "SourceToBronzeLogs",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "c548328f-1096-8324-4ada-b344aba6be41",
+        "databaseName": "IngestionLogsDB",
+        "tableName": "SourceToBronzeLogs",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "IngestLogEvents-stream"
+        }
+      ],
+      "inputSchemas": []
+    }
+  ],
+  "streams": [
+    {
+      "id": "c72a3409-d060-4d30-875f-a426422fa529",
+      "name": "IngestLogEvents-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "IngestFromNotebooks"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.0"
+}

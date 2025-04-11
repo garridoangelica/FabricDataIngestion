@@ -1,0 +1,28 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "ab57bb34-3e62-4fa2-9047-29f06bb2b50e",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "c548328f-1096-8324-4ada-b344aba6be41",
+        "databaseItemName": "IngestionLogsDB"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "28bc2551-5d63-4cfb-bf54-98b89f367649",
+        "content": ".create table SourceToBronzeLogs (\n    SourceTableName: string,\n    DestLakehouse: string,\n    DestTableName: string,\n    Status: string,\n    LogTime: datetime,\n    EventProcessedUtcTime: datetime,\n    EventEnqueuedUtcTime: datetime,\n    PartitionId: int\n) ",
+        "title": "CreateSourceToBronzeLogs",
+        "dataSourceId": "ab57bb34-3e62-4fa2-9047-29f06bb2b50e"
+      },
+      {
+        "id": "8ca5a67d-58dc-4b80-9f2b-118a742cd7ec",
+        "content": "// Use 'take' to view a sample number of records in the table and check the data.\nSourceToBronzeLogs\n| take 100\n\n// Latest value for every table, latest transaction (append)\nSourceToBronzeLogs \n| summarize arg_max(LogTime, *) by DestTableName\n\n// Count # of status of all tables\nSourceToBronzeLogs \n| summarize count() by Status\n",
+        "title": "",
+        "dataSourceId": "ab57bb34-3e62-4fa2-9047-29f06bb2b50e"
+      }
+    ]
+  }
+}

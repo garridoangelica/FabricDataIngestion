@@ -1,0 +1,222 @@
+{
+  "schema_version": "60",
+  "autoRefresh": {
+    "enabled": true,
+    "defaultInterval": "1m",
+    "minInterval": "1s"
+  },
+  "tiles": [
+    {
+      "id": "473429e9-fbba-4408-a97c-bd18309ee926",
+      "title": "Latest Loads To Bronze",
+      "visualType": "table",
+      "pageId": "cb0ebc89-bd25-49d6-8085-81aed11adefa",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "0e24091e-498c-4b00-80fd-cb9fd24bf4fb"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilter": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "97a7c57a-4aa6-47f6-ba5a-c30c7f2d161c",
+      "title": "Latest status per Table",
+      "visualType": "pie",
+      "pageId": "cb0ebc89-bd25-49d6-8085-81aed11adefa",
+      "layout": {
+        "x": 9,
+        "y": 0,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c06b0ab9-80cb-4cbd-80ca-7dbce5c69b0e"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumn": "Status",
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "f9a17288-844f-453d-88e7-4358c4b19efd",
+      "title": "Failed Loads",
+      "visualType": "table",
+      "pageId": "cb0ebc89-bd25-49d6-8085-81aed11adefa",
+      "layout": {
+        "x": 0,
+        "y": 7,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b51afd6e-4caa-45ce-b221-7d7778740d20"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "246aab58-13c1-433e-871b-c2572ace1ac1",
+      "title": "Historical Completed vs Failed Loads",
+      "visualType": "column",
+      "pageId": "cb0ebc89-bd25-49d6-8085-81aed11adefa",
+      "layout": {
+        "x": 9,
+        "y": 7,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "564a7bac-10e6-4e3b-88c4-8ed1c471cb86"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "# of runs",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "Status",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "0a330621-7516-4082-8aa1-2a9f63d6793f",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "2b32496a-5c97-4612-b769-0a0efd6d6de5",
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "c548328f-1096-8324-4ada-b344aba6be41",
+      "name": "IngestionLogsDB",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "cb0ebc89-bd25-49d6-8085-81aed11adefa"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2b32496a-5c97-4612-b769-0a0efd6d6de5"
+      },
+      "text": "// Use 'take' to view a sample number of records in the table and check the data.\nSourceToBronzeLogs\n| summarize arg_max(LogTime, *) by DestTableName\n| project  SourceTableName, DestLakehouse, DestTableName, Status, LogTime",
+      "id": "0e24091e-498c-4b00-80fd-cb9fd24bf4fb",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2b32496a-5c97-4612-b769-0a0efd6d6de5"
+      },
+      "text": "// Latest value for every table, latest transaction (append)\nSourceToBronzeLogs \n| summarize arg_max(LogTime, *) by DestTableName\n| summarize count() by Status",
+      "id": "c06b0ab9-80cb-4cbd-80ca-7dbce5c69b0e",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2b32496a-5c97-4612-b769-0a0efd6d6de5"
+      },
+      "text": "SourceToBronzeLogs \n| summarize arg_max(LogTime, *) by DestTableName\n| project SourceTableName, DestLakehouse, DestTableName, Status, LogTime\n| where Status == 'Failed'",
+      "id": "b51afd6e-4caa-45ce-b221-7d7778740d20",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2b32496a-5c97-4612-b769-0a0efd6d6de5"
+      },
+      "text": "SourceToBronzeLogs\n| summarize count() by Status\n| where Status != 'InProgress'",
+      "id": "564a7bac-10e6-4e3b-88c4-8ed1c471cb86",
+      "usedVariables": []
+    }
+  ]
+}

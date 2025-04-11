@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDatabase",
+    "displayName": "IngestionLogsDB",
+    "description": "IngestionLogsDB"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c548328f-1096-8324-4ada-b344aba6be41"
+  }
+}
