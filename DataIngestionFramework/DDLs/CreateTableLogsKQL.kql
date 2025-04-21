@@ -3,6 +3,9 @@
     DestLakehouse: string,
     DestTableName: string,
     Status: string,
-    LogTime: datetime
+    LogTime: datetime,
+    EventProcessedUtcTime: datetime,
+    EventEnqueuedUtcTime: datetime,
+    PartitionId: int
 )
 .add database IngestionLogs admins ('aadapp=<applicatino id of SPN>')

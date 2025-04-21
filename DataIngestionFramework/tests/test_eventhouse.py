@@ -9,14 +9,17 @@ import fabricdataingest.eventhouse as evc
 import fabricdataingest.utils as utils
 
 
-class TestPackagename(unittest.TestCase):
+class TestEventHouse(unittest.TestCase):
     def test_print_hello(self, name="Microsoft"):
+        print("Print Hello World Test Case")
         # Call the function
         say_hello = hw.print_hello(name)
         # Assert the output
         self.assertEqual(say_hello, f"Hello {name}")
 
     def test_eventhouse_connector(self):
+        print("Eventhouse Connector Test Case")
+        # Set up the environment variables for Kusto connection
         kustoUri = os.getenv('FABRIC_KUSTO_URI')
         database = os.getenv('FABRIC_KUSTO_DATABASE')
         # Call the function
@@ -25,14 +28,18 @@ class TestPackagename(unittest.TestCase):
         self.assertEqual(ehc.kustoUri, kustoUri)
         self.assertEqual(ehc.database, database)
 
-        id = "2"
-        status = "InProgress"
-        # Get the KQL Command
-        kql_command = utils.buildAppendCommand(f'{id}', "bronze", f"Table{id}_TestCaseGitHub", f"{status}")
-        response = ehc.execute_query(kql_command)
-        self.assertEqual(response.errors_count, 0)
+        status = ["InProgress", "Completed"]
+        for id in range(3):
+            for stat in status:  # Iterate over the status list
+                # Get the KQL Command
+                id += 1
+                kql_command = utils.buildAppendCommand(f'{id}', "bronze", f"Table{id}_TestCaseGitHub", f"{stat}")
+                response = ehc.execute_query(kql_command)
+                self.assertEqual(response.errors_count, 0)
 
     def test_throttle_handling(self):
+        print("Throttle Handling Test Case")
+        # Set up the environment variables for Kusto connection
         kustoUri = os.getenv('FABRIC_KUSTO_URI')
         database = os.getenv('FABRIC_KUSTO_DATABASE')
         ehc = evc.EventHouseConnector(kustoUri, database)
@@ -65,9 +72,12 @@ if __name__ == '__main__':
     # Create a test suite
     suite = unittest.TestSuite()
     # Add individual test cases to the suite
-    suite.addTest(TestPackagename('test_print_hello'))
-    suite.addTest(TestPackagename('test_eventhouse_connector'))
-    suite.addTest(TestPackagename('test_throttle_handling'))
+    # Hello World Test Case for testing calling test cases
+    suite.addTest(TestEventHouse('test_print_hello'))
+    # Test Case to check if the EventHouseConnector sends data properly to the Kusto DB
+    suite.addTest(TestEventHouse('test_eventhouse_connector'))
+    # Test Case to check if the EventHouseConnector handles throttling properly
+    # suite.addTest(TestEventHouse('test_throttle_handling'))  # Uncommented to include throttling test case
     # Run the test suite
     runner = unittest.TextTestRunner()
     runner.run(suite)

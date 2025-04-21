@@ -14,12 +14,23 @@ def buildAppendCommand(id, lakehouse,tablename,status):
     """
     kql_command = f"""
     .append SourceToBronzeLogs <|
-    datatable (SourceTableID: string, DestLakehouse: string, DestTableName: string, Status: string, LogTime: datetime)
+    datatable (SourceTableName: string, DestLakehouse: string, DestTableName: string, Status: string, LogTime: datetime, EventProcessedUtcTime: datetime, EventEnqueuedUtcTime: datetime, PartitionId: int)
     [
-        "{id}","{lakehouse}", "{tablename}", "{status}", datetime({utc_time()})
+        'Table_{id}',"{lakehouse}", 'Table_{id}_{tablename}', "{status}", datetime({utc_time()}),datetime({utc_time()}),datetime({utc_time()}),0
     ]
     """
     return kql_command
+
+def buildMessage(id, status):
+    # Create a JSON message
+    message = {
+        'SourceTableName': f'Table_{id}',
+        'DestLakehouse': 'BronzeLakehouse',
+        'DestTableName': f'Table_{id}',
+        'Status':status,
+        'LogTime': utc_time()
+    }
+    return message
 
 def isFabricSparkEnv():
     # Check for an environment variable that is specific to Fabric Spark
